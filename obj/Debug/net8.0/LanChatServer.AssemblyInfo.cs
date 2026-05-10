@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LanChatServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6487df94a5b3c7c7f9c2d3940d28ca84499dc7ea")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79ba8290a86058bb451572d0ba3163200487dff2")]
 [assembly: System.Reflection.AssemblyProductAttribute("LanChatServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LanChatServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

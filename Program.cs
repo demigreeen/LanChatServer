@@ -5,7 +5,6 @@ using System.Text;
 class Server
 {
     private static readonly List<TcpClient> clients = new();
-    private static readonly Dictionary<TcpClient, string> fileServers = new();
     private static readonly object lockObj = new();
 
     static async Task Main()
@@ -13,7 +12,6 @@ class Server
         int port = int.Parse(Environment.GetEnvironmentVariable("PORT") ?? "8080");
         var listener = new TcpListener(IPAddress.Any, port);
         listener.Start();
-
         Console.WriteLine($"Сервер запущен на порту {port}");
 
         while (true)
@@ -29,14 +27,14 @@ class Server
         lock (lockObj)
             clients.Add(client);
 
+        BroadcastOnlineCount();
+
         var stream = client.GetStream();
-        var buffer = new byte[65536];
 
         try
         {
             while (true)
             {
-                // Читаем длину сообщения (4 байта)
                 byte[] lenBytes = new byte[4];
                 int read = await stream.ReadAsync(lenBytes, 0, 4);
                 if (read == 0) break;
@@ -54,25 +52,48 @@ class Server
 
                 string message = Encoding.UTF8.GetString(msgBytes);
                 Console.WriteLine($"Сообщение: {message}");
-
-                // Рассылаем всем включая отправителя
-                await BroadcastAsync(message, msgBytes);
+                await BroadcastAsync(msgBytes);
             }
         }
         catch { }
         finally
         {
             lock (lockObj)
-            {
                 clients.Remove(client);
-                fileServers.Remove(client);
-            }
+
             client.Close();
             Console.WriteLine("Клиент отключился");
+            BroadcastOnlineCount();
         }
     }
 
-    static async Task BroadcastAsync(string message, byte[] msgBytes)
+    static void BroadcastOnlineCount()
+    {
+        int count;
+        lock (lockObj)
+            count = clients.Count;
+
+        string message = $"ONLINE|{count}";
+        byte[] msgBytes = Encoding.UTF8.GetBytes(message);
+        byte[] lenBytes = BitConverter.GetBytes(msgBytes.Length);
+
+        List<TcpClient> snapshot;
+        lock (lockObj)
+            snapshot = new List<TcpClient>(clients);
+
+        foreach (var c in snapshot)
+        {
+            try
+            {
+                var stream = c.GetStream();
+                stream.Write(lenBytes, 0, lenBytes.Length);
+                stream.Write(msgBytes, 0, msgBytes.Length);
+            }
+            catch { }
+        }
+    }
+
+    static async Task BroadcastAsync(byte[] msgBytes)
     {
         byte[] lenBytes = BitConverter.GetBytes(msgBytes.Length);
 
