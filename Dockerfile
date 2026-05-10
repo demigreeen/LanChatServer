@@ -7,4 +7,4 @@ FROM mcr.microsoft.com/dotnet/runtime:8.0
 WORKDIR /app
 COPY --from=build /publish .
 EXPOSE 8080
-ENTRYPOINT ["dotnet", "LanChatServer.dll"]
+ENTRYPOINT ["dotnet", "/app/LanChatServer.dll"]
