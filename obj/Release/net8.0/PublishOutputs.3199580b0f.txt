@@ -1,0 +1,5 @@
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Release\net8.0\publish\LanChatServer.exe
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Release\net8.0\publish\LanChatServer.dll
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Release\net8.0\publish\LanChatServer.deps.json
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Release\net8.0\publish\LanChatServer.runtimeconfig.json
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Release\net8.0\publish\LanChatServer.pdb

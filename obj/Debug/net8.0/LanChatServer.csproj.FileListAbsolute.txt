@@ -1,0 +1,14 @@
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Debug\net8.0\LanChatServer.exe
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Debug\net8.0\LanChatServer.deps.json
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Debug\net8.0\LanChatServer.runtimeconfig.json
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Debug\net8.0\LanChatServer.dll
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\bin\Debug\net8.0\LanChatServer.pdb
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.AssemblyInfoInputs.cache
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.AssemblyInfo.cs
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.csproj.CoreCompileInputs.cache
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.dll
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\refint\LanChatServer.dll
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.pdb
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\LanChatServer.genruntimeconfig.cache
+C:\Users\Обезьяна\source\repos\LanChatServer\LanChatServer\obj\Debug\net8.0\ref\LanChatServer.dll
