@@ -6,6 +6,7 @@ class Server
 {
     private static readonly List<TcpClient> clients = new();
     private static readonly object lockObj = new();
+    private static int clickCount = 0; // ← счётчик
 
     static async Task Main()
     {
@@ -28,9 +29,9 @@ class Server
             clients.Add(client);
 
         BroadcastOnlineCount();
+        SendClickCount(client); // ← отправить текущий счётчик новому клиенту
 
         var stream = client.GetStream();
-
         try
         {
             while (true)
@@ -51,8 +52,19 @@ class Server
                 }
 
                 string message = Encoding.UTF8.GetString(msgBytes);
-                Console.WriteLine($"Сообщение: {message}");
-                await BroadcastAsync(msgBytes);
+
+                if (message == "CLICK") // ← обработка клика
+                {
+                    lock (lockObj)
+                        clickCount++;
+                    Console.WriteLine($"Клик! Всего: {clickCount}");
+                    BroadcastClickCount();
+                }
+                else
+                {
+                    Console.WriteLine($"Сообщение: {message}");
+                    await BroadcastAsync(msgBytes);
+                }
             }
         }
         catch { }
@@ -60,10 +72,45 @@ class Server
         {
             lock (lockObj)
                 clients.Remove(client);
-
             client.Close();
             Console.WriteLine("Клиент отключился");
             BroadcastOnlineCount();
+        }
+    }
+
+    static void SendClickCount(TcpClient client)
+    {
+        try
+        {
+            string message = $"CLICKCOUNT|{clickCount}";
+            byte[] msgBytes = Encoding.UTF8.GetBytes(message);
+            byte[] lenBytes = BitConverter.GetBytes(msgBytes.Length);
+            var stream = client.GetStream();
+            stream.Write(lenBytes, 0, lenBytes.Length);
+            stream.Write(msgBytes, 0, msgBytes.Length);
+        }
+        catch { }
+    }
+
+    static void BroadcastClickCount()
+    {
+        string message = $"CLICKCOUNT|{clickCount}";
+        byte[] msgBytes = Encoding.UTF8.GetBytes(message);
+        byte[] lenBytes = BitConverter.GetBytes(msgBytes.Length);
+
+        List<TcpClient> snapshot;
+        lock (lockObj)
+            snapshot = new List<TcpClient>(clients);
+
+        foreach (var c in snapshot)
+        {
+            try
+            {
+                var stream = c.GetStream();
+                stream.Write(lenBytes, 0, lenBytes.Length);
+                stream.Write(msgBytes, 0, msgBytes.Length);
+            }
+            catch { }
         }
     }
 
